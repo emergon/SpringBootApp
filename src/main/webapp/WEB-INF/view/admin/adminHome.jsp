@@ -7,6 +7,7 @@
     </head>
     <body>
         <h1>Welcome to the administration page</h1>
+        <a href="${pageContext.request.contextPath}/admin/create">Create User</a>
         <a href="${pageContext.request.contextPath}/">Back</a>
     </body>
 </html>

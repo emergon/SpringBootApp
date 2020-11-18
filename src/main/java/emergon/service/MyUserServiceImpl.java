@@ -4,7 +4,6 @@ import emergon.dao.UserDao;
 import emergon.entity.MyUser;
 import emergon.entity.Role;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +22,8 @@ public class MyUserServiceImpl implements MyUserService{
 
     @Autowired
     private UserDao udao;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     
     @Override//This method will be used from DaoAuthenticationProvider in MyWebSecurityConfigurer
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -47,6 +49,14 @@ public class MyUserServiceImpl implements MyUserService{
             authorities.add(authority);
         }
         return authorities;
+    }
+
+    @Override
+    public void create(MyUser user) {
+        String plainPassword = user.getPasswd();
+        String encodedPassword = passwordEncoder.encode(plainPassword);
+        user.setPasswd(encodedPassword);
+        udao.save(user);
     }
     
 }
