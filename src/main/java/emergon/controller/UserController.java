@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
-public class HomeController {
+@RequestMapping("/user")//We write here the URL that we want our methods to inherit
+public class UserController {
     
     @GetMapping
-    public String showHomePage(){
-        return "home";
+    public String showUserPage(){
+        return "user/userHome";//ViewResolver will create WEB-INF/view/user/userHome.jsp
     }
+    
 }
