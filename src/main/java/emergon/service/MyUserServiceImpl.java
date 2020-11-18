@@ -25,7 +25,9 @@ public class MyUserServiceImpl implements MyUserService{
     
     @Override//This method will be used from DaoAuthenticationProvider in MyWebSecurityConfigurer
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println(">>>>>>username:"+username);
         MyUser myuser = udao.findByUsername(username);
+        System.out.println(">>>>>>>22222>>>username:"+myuser.getFname());
         List<GrantedAuthority> authorities = convertRolesToGrantedAuthorities(myuser.getRoleSet());
         User user = new User(myuser.getUsername(), myuser.getPasswd(), authorities);
         return user;
